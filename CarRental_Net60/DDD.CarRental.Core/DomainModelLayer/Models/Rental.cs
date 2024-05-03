@@ -16,7 +16,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public int CarId { get; set; }
 
         public Driver _Driver { get; set; }
-
         public int DriverId { get; set; }
 
     }
