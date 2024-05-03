@@ -15,7 +15,6 @@
     <Folder Include="DomainModelLayer\Events\" />
     <Folder Include="DomainModelLayer\Factories\" />
     <Folder Include="DomainModelLayer\Services\" />
-    <Folder Include="DomainModelLayer\Policies\" />
   </ItemGroup>
 
   <ItemGroup>
