@@ -7,6 +7,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
     public class Position : ValueObject
     {
+    
         public float X { get; set; }
         public float Y { get; set; }
 
