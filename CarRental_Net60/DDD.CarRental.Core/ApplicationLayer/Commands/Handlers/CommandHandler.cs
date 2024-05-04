@@ -5,6 +5,8 @@ using DDD.SharedKernel.InfrastructureLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Numerics;
 using System.Text;
 
 namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
@@ -49,6 +51,9 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (command.Started < DateTime.Now)
                 throw new Exception($"Start data cannot be  avalaible");
             c.CarStatus = Status.reserved;
+
+            IDiscountPolicy policy = this._discountPolicyFactory.Create(d);
+            
             string driveFirstLastName = $"{d.FirstName} {d.LastName}";
             Rental rental = new Rental
             {
@@ -56,10 +61,12 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
                 Started = DateTime.Now,
                 DriverId = command.DriverId
             };
+
+            rental.RegisterPolicy(policy);
+
             _unitOfWork.RentalRepository.Insert(rental);
             _unitOfWork.Commit();
         }
-
         public void Execute(CreateDriverCommand command)
         {
             Driver driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
