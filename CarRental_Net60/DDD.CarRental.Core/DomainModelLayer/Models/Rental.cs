@@ -19,6 +19,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         public DateTime Finished { get; set; }
 
+        public Money MoneyForRental { get; set; }
+
         public Car _Car { get; set; }
         public long CarId { get; set; }
 
