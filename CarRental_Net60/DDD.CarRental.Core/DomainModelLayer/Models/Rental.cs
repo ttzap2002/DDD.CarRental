@@ -1,4 +1,5 @@
-﻿using DDD.SharedKernel.DomainModelLayer;
+﻿using DDD.CarRental.Core.DomainModelLayer.Interfaces;
+using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
 using System.Text;
@@ -7,6 +8,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
     public class Rental: Entity, IAggregateRoot
     {
+        public Rental(long id,DateTime started,long carId, long driverId) :base(id)
+        {
+            Started = started;
+            CarId = carId;
+            DriverId = driverId;
+        }
+
         public DateTime Started { get; set; }
 
         public DateTime Finished { get; set; }
@@ -16,6 +24,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         public Driver _Driver { get; set; }
         public long DriverId { get; set; }
+
+        private IDiscountPolicy _policy;
+
+        public void RegisterPolicy(IDiscountPolicy policy)
+        {
+            this._policy = policy ?? throw new ArgumentNullException("Empty discount policy");
+        }
 
     }
 

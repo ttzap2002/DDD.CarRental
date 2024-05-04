@@ -5,6 +5,8 @@ using DDD.SharedKernel.InfrastructureLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Numerics;
 using System.Text;
 
 namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
@@ -44,22 +46,24 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             Driver d = _unitOfWork.DriverRepository.Get(command.DriverId);
             if (d == null)
                 throw new Exception($"Driver '{command.DriverId}' didn't exists.");
+            if (_unitOfWork.RentalRepository.Get(command.RentalId) != null)
+                throw new Exception($"Repository is currently exists.");
             if (c.CarStatus != Status.free)
                 throw new Exception($"This car is not avalaible");
             if (command.Started < DateTime.Now)
                 throw new Exception($"Start data cannot be  avalaible");
             c.CarStatus = Status.reserved;
+
+            IDiscountPolicy policy = this._discountPolicyFactory.Create(d);
+            
             string driveFirstLastName = $"{d.FirstName} {d.LastName}";
-            Rental rental = new Rental
-            {
-                CarId = command.CarId,
-                Started = DateTime.Now,
-                DriverId = command.DriverId
-            };
+            Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
+
+            rental.RegisterPolicy(policy);
+
             _unitOfWork.RentalRepository.Insert(rental);
             _unitOfWork.Commit();
         }
-
         public void Execute(CreateDriverCommand command)
         {
             Driver driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
