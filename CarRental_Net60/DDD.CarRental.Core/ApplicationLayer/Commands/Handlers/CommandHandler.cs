@@ -58,7 +58,9 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             
             string driveFirstLastName = $"{d.FirstName} {d.LastName}";
             Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
-            
+
+            rental.RegisterPolicy(policy);
+
             _unitOfWork.RentalRepository.Insert(rental);
             _unitOfWork.Commit();
         }
