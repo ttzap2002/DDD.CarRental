@@ -18,7 +18,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _discountPolicyFactory = discountPolicyFactory;
         }
 
-        
         public void Execute(RentCarCommand command)
         {
             

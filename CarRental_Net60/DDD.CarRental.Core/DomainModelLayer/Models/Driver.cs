@@ -36,7 +36,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this.AddDomainEvent(new CreateDriverDomainEvent(this.Id, this.FirstName.ToString(), this.LastName.ToString()));
         }
 
-
     }
 
 }
