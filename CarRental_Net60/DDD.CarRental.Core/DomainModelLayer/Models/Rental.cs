@@ -8,6 +8,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
     public class Rental: Entity, IAggregateRoot
     {
+        public Rental(long id,DateTime started,long carId, long driverId) :base(id)
+        {
+            Started = started;
+            CarId = carId;
+            DriverId = driverId;
+        }
+
         public DateTime Started { get; set; }
 
         public DateTime Finished { get; set; }
