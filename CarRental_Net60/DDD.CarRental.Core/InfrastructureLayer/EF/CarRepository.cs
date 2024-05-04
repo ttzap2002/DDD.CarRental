@@ -11,5 +11,11 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         public CarRepository(CarRentalDbContext context)
             :base(context)
         { }
+
+        public Car GetCar(int id)
+        {
+            return _context.Cars.Where(p => p.Id == id)
+                .FirstOrDefault();
+        }
     }
 }

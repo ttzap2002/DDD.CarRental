@@ -21,7 +21,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
         public void Execute(RentCarCommand command)
         {
             
-            Car c = _dbContext.Cars.Find(command.CarId);
+            Car c = _unitOfWork.CarRepository.GetCar(command.CarId);
             if (c == null)
                 throw new Exception($"Car '{command.CarId}' didn't exists.");
             Driver d = _dbContext.Drivers.Find(command.DriverId);
