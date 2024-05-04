@@ -1,6 +1,7 @@
 ﻿using DDD.CarRental.Core.DomainModelLayer.Factories;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.DomainModelLayer.Models;
+using DDD.SharedKernel.InfrastructureLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,51 +18,36 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _discountPolicyFactory = discountPolicyFactory;
         }
 
-        /*
+        
         public void Execute(RentCarCommand command)
         {
             
-            Car c = _unitOfWork.CarRepository.GetCar(command.CarId);
+            Car c = _unitOfWork.CarRepository.Get(command.CarId);
             if (c == null)
                 throw new Exception($"Car '{command.CarId}' didn't exists.");
-            Driver d = _dbContext.Drivers.Find(command.DriverId);
+            Driver d = _unitOfWork.DriverRepository.Get(command.DriverId);
             if (d == null)
                 throw new Exception($"Driver '{command.DriverId}' didn't exists.");
-            Rental r = _dbContext.Rentals.FirstOrDefault(x => x.IDCar == command.CarId && x.Finished == null && x.Car.CarStatus == CarStatus.BUSY);
-            if (r != null)
-                throw new Exception($"Another driver already has used this car");
-            c.CarStatus = CarStatus.BUSY;
+            if (c.CarStatus != Status.free)
+                throw new Exception($"This car is not avalaible");
+            if (command.Started < DateTime.Now)
+                throw new Exception($"Start data cannot be  avalaible");
+            c.CarStatus = Status.reserved;
             string driveFirstLastName = $"{d.FirstName} {d.LastName}";
-            rental = new Rental
-            {
-                IDCar = command.CarId,
-                RentalId = command.RentId,
-                Started = DateTime.Now,
-                IdDriver = command.DriverId
-
-            };
-            _dbContext.Rentals.Add(rental);
-            var driverReadModel = new RentalReadModel
+            Rental rental = new Rental
             {
                 CarId = command.CarId,
-                RentalId = command.RentId,
-                Created = DateTime.Now,
-                DriverId = command.DriverId,
-                StartXPosition = c.XPosition,
-                StratYPosition = c.YPosition,
-                _Driver = driveFirstLastName,
-                RegistrationNumber = c.RegistrationNumber,
-                Total = 0
+                Started = DateTime.Now,
+                DriverId = command.DriverId
             };
-            _dbContext.RentalReadModels.Add(driverReadModel);
-            _dbContext.SaveChanges();
-
+            _unitOfWork.RentalRepository.Insert(rental);
+            _unitOfWork.Commit();
         }
-        */
+
         public void Execute(CreateDriverCommand command)
         {
             Driver driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
-            
+
             if (driver != null)
                 throw new InvalidOperationException($"Driver '{command.DriverId}' already exists.");
 
@@ -69,12 +55,14 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (driver != null)
                 throw new InvalidOperationException($"Driver with licence number '{command.LicenceNumber}' already exists.");
 
-  
+
             driver = new Driver(command.LicenceNumber, command.FirstName, command.LastName, command.DriverId);
-           
+
             _unitOfWork.DriverRepository.Insert(driver);
             _unitOfWork.Commit();
         }
+
+
 
     }
 }

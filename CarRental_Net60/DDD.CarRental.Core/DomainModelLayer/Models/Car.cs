@@ -12,6 +12,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public Position CurrentPosition { get; set; }
         public Distance CurrentDistance { get; set; }
         public Distance TotalDistance { get; set; }
+        public Status CarStatus { get; set; }
         public ICollection<Rental> CarRentals { get; set; }
     }
 

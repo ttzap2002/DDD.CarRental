@@ -1,5 +1,6 @@
 ﻿using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.DomainModelLayer.Models;
+using System.Linq;
 
 namespace DDD.CarRental.Core.InfrastructureLayer.EF
 {
@@ -8,5 +9,10 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         public DriverRepository(CarRentalDbContext context)
             : base(context)
         { }
+
+        public Driver GetDriver(long driverId)
+        {
+           return _context.Drivers.Where(x => x.Id == driverId).FirstOrDefault();
+        }
     }
 }

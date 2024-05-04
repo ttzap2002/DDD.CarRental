@@ -17,8 +17,6 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF.EntityConfigurations
             // ustawianie klucza głównego
             rentalConfiguration.HasKey(c => c.Id);
 
-            // klucz tabeli nie będzie generowany przez EF
-            rentalConfiguration.Property(v => v.Id).ValueGeneratedNever();
 
             rentalConfiguration.Ignore(c => c.DomainEvents);
 
