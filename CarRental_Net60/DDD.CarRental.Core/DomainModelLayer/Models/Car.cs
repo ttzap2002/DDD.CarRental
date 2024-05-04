@@ -21,7 +21,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         {
             RegistrationNumber = registrationNumber;
             CurrentPosition = currentPosition;
-            CurrentDistance = new Distance();
+            CurrentDistance = new Distance(0,Unit.kilometer);
             TotalDistance = totalDistance;
             CarStatus = Status.free;
             CarRentals = new List<Rental>();

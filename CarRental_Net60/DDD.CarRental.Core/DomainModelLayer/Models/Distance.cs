@@ -5,10 +5,18 @@ using System.Collections.Generic;
 
 namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
-    public class Distance: ValueObject
+    public class Distance : ValueObject
     {
         public float Value { get; set; }
-        public Unit Unit { get; set; }
+        public Unit DistanceUnit { get; set; }
+
+        protected Distance() { }
+
+        public Distance(float value, Unit unit)
+        {
+            Value = value;
+            DistanceUnit = unit;
+        }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
@@ -16,7 +24,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         }
     }
 
-    public enum Unit 
+    public enum Unit
     {
         meter,
         kilometer,
