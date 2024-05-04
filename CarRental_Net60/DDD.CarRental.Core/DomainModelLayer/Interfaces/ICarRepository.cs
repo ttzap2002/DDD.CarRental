@@ -7,5 +7,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Interfaces
 {
     public interface ICarRepository: IRepository<Car>
     {
+
     }
 }
