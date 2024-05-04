@@ -7,6 +7,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Interfaces
 {
     public interface ICarRepository: IRepository<Car>
     {
-        Car GetCar(long id);
+        Car GetCarByRegistrationNumber(string registration);
     }
 }

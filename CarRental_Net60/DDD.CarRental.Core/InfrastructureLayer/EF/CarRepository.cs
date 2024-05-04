@@ -12,9 +12,9 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
             :base(context)
         { }
 
-        public Car GetCar(int id)
+        public Car GetCarByRegistrationNumber(string registration)
         {
-            return _context.Cars.Where(p => p.Id == id)
+            return _context.Cars.Where(p => p.RegistrationNumber == registration)
                 .FirstOrDefault();
         }
     }
