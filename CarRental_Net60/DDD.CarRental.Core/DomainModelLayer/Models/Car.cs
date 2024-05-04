@@ -24,7 +24,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             CurrentDistance = new Distance();
             TotalDistance = totalDistance;
             CarStatus = Status.free;
-            CarRentals = new ICollection<Rental>();
+            CarRentals = new List<Rental>();
         }
     }
 
