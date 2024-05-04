@@ -58,7 +58,23 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
 
         }
         */
+        public void Execute(CreateDriverCommand command)
+        {
+            Driver driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
+            
+            if (driver != null)
+                throw new InvalidOperationException($"Driver '{command.DriverId}' already exists.");
 
+            driver = _unitOfWork.DriverRepository.GetDriverByLicenceNumber(command.LicenceNumber);
+            if (driver != null)
+                throw new InvalidOperationException($"Driver with licence number '{command.LicenceNumber}' already exists.");
+
+  
+            driver = new Driver(command.LicenceNumber, command.FirstName, command.LastName, command.DriverId);
+           
+            _unitOfWork.DriverRepository.Insert(driver);
+            _unitOfWork.Commit();
+        }
 
     }
 }

@@ -25,14 +25,14 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         protected Driver()
         { }
 
-        public Driver(string licenceNumber, string firstName, string lastName)
-            : base()
+        public Driver(string licenceNumber, string firstName, string lastName, long ID)
+            : base(ID)
         {
-            if (String.IsNullOrEmpty(FirstName)) throw new ArgumentNullException("Driver first name is null or empty");
-            if (String.IsNullOrEmpty(LastName)) throw new ArgumentNullException("Driver last name is null or empty");
-
             
-
+            LicenceNumber = licenceNumber;
+            FirstName = firstName;
+            LastName = lastName;
+           
             this.AddDomainEvent(new CreateDriverDomainEvent(this.Id, this.FirstName.ToString(), this.LastName.ToString()));
         }
 
