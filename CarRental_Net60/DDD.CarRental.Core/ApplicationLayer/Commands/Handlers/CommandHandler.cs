@@ -62,8 +62,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _unitOfWork.Commit();
         }
 
-
-
     }
 }
 

@@ -14,5 +14,10 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         {
            return _context.Drivers.Where(x => x.Id == driverId).FirstOrDefault();
         }
+
+        public Driver GetDriverByLicenceNumber(string licence)
+        {
+            return _context.Drivers.Where(x => x.LicenceNumber == licence).FirstOrDefault();
+        }
     }
 }
