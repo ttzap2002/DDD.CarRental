@@ -18,6 +18,23 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _discountPolicyFactory = discountPolicyFactory;
         }
 
+        public void Execute(CreateCarCommand command)
+        {
+            if (command == null)
+                throw new Exception("Command not added.");
+            Car c = this._unitOfWork.CarRepository.Get(command.ID);
+            if (c != null)
+                throw new Exception($"Car {command.ID} already exist.");
+            c = this._unitOfWork.CarRepository.GetCarByRegistrationNumber(command.RegistrationNumber);
+            if (c != null)
+                throw new Exception($"Car with registration {command.RegistrationNumber} already exist.");
+
+            c = new Car(command.ID, command.RegistrationNumber, command.CurrentPosition, command.TotalDistance);
+
+            this._unitOfWork.CarRepository.Insert(c);
+            this._unitOfWork.Commit();
+        }
+
         public void Execute(RentCarCommand command)
         {
             

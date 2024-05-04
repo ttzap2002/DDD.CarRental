@@ -14,6 +14,18 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public Distance TotalDistance { get; set; }
         public Status CarStatus { get; set; }
         public ICollection<Rental> CarRentals { get; set; }
+
+        protected Car() { }
+
+        public Car(long id, string registrationNumber, Position currentPosition, Distance totalDistance) : base(id)
+        {
+            RegistrationNumber = registrationNumber;
+            CurrentPosition = currentPosition;
+            CurrentDistance = new Distance();
+            TotalDistance = totalDistance;
+            CarStatus = Status.free;
+            CarRentals = new ICollection<Rental>();
+        }
     }
 
     public enum Status
