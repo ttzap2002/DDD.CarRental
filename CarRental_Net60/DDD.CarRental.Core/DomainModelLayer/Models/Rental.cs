@@ -32,6 +32,16 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this._policy = policy ?? throw new ArgumentNullException("Empty discount policy");
         }
 
+        public void FinishRental(DateTime finished)
+        {
+            long minutes = (finished - Started).Minutes;
+            this.Finished = finished;
+            _Driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
+
+
+            //this.AddDomainEvent(new VisitFishedDomainEvent(this));
+        }
+
     }
 
 }

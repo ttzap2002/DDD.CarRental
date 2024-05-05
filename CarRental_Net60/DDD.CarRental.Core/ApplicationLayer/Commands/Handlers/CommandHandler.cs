@@ -82,6 +82,29 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _unitOfWork.Commit();
         }
 
+        public void Execute(ReturnCarCommand command)
+        {
+
+            Car c = _unitOfWork.CarRepository.Get(command.CarId);
+            if (c == null)
+                throw new Exception($"Car '{command.CarId}' didn't exists.");
+            Driver d = _unitOfWork.DriverRepository.Get(command.DriverId);
+            if (d == null)
+                throw new Exception($"Driver '{command.DriverId}' didn't exists.");
+            Rental r = _unitOfWork.RentalRepository.GetRentalID(command.RentalId);
+            if (r == null)
+                throw new Exception($"Rental with ID {command.RentalId} doesn't exist");
+
+            if (c.CarStatus != Status.reserved)
+                throw new Exception($"This car is not rented");
+
+            //To na dole trzeba zrobić tymi handlerami! To samo z położeniem chyba
+            //c.CarStatus = Status.free;
+            // c.CurrentPosition = x;
+            r.FinishRental(command.Finished) ;
+            _unitOfWork.Commit();
+        }
+
     }
 }
 
