@@ -14,7 +14,10 @@ namespace DDD.CarRental.Core.DomainModelLayer.Factories
         public IDiscountPolicy Create(Driver driver)
         {
             IDiscountPolicy returner = new StandardDiscountPolicy();
-            if (driver.Id % 2 == 0 || driver.Id % 3 == 0)
+
+            int rentalsCount = driver.Rentals.Count();
+
+            if (rentalsCount>10 && rentalsCount % 2 == 0)
                 returner = new VipDiscountPolicy();
 
             return returner;

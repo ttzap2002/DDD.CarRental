@@ -12,11 +12,14 @@ namespace DDD.CarRental.Core.DomainModelLayer.Policies
     {
         public string Name { get; protected set; }
 
-        public StandardDiscountPolicy() 
+        public StandardDiscountPolicy()
         {
             this.Name = "Standard discount policy";
         }
 
-        public Money CalculateDiscount(Money total, long numOfMinutes, Money unitPrice) => total.MultiplyBy(0.015m);
+        public float CalculateDiscount(long numOfMinutes)
+        {
+            return numOfMinutes * (float)0.001;
+        }
     }
 }

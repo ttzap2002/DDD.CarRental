@@ -17,16 +17,21 @@ namespace DDD.CarRental.Core.DomainModelLayer.Policies
             this.Name = "Vip discount policy";
         }
 
-        public Money CalculateDiscount(Money total, long numOfMinutes, Money unitPrice)
+        public float CalculateDiscount(long numOfMinutes)
         {
-            decimal discountPercent = 0;
-            if (numOfMinutes < 75)
-                discountPercent = 0.015m;
-            else if (numOfMinutes < 120)
-                discountPercent = 0.025m;
+           
+            float minutes = 0;
+
+            if(numOfMinutes < 7200)
+            {
+                minutes = (float)numOfMinutes * (float)0.01;
+            }
             else
-                discountPercent = 0.05m;
-            return total.MultiplyBy(discountPercent);
+            {
+                minutes = (float)(Math.Log(numOfMinutes) * (float)4);
+            }
+
+            return minutes;
         }
     }
 }
