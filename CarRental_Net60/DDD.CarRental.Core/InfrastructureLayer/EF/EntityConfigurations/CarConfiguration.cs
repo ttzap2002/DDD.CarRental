@@ -30,6 +30,8 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF.EntityConfigurations
 
             driverConfiguration.OwnsOne(r => r.TotalDistance);
 
+            driverConfiguration.OwnsOne(r => r.CurrentPosition);
+
 
 
         }
