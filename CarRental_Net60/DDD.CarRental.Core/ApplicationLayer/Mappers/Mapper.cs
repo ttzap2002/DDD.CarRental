@@ -42,7 +42,8 @@ namespace DDD.CarRental.Core.ApplicationLayer.Mappers
                 Started = rental.Started,
                 Finished = rental.Finished,
                 CarId = rental.CarId,
-                DriverId = rental.DriverId
+                DriverId = rental.DriverId,
+                MoneyForRental = rental.MoneyForRental
             };
         }
     }

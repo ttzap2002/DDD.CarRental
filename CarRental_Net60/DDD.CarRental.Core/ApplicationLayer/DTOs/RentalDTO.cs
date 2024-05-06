@@ -17,6 +17,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.DTOs
         public DateTime? Finished { get; set; }
         public long CarId { get; set; }
         public long DriverId { get; set; }
-
+        public Money MoneyForRental { get; set; }
     }
 }
