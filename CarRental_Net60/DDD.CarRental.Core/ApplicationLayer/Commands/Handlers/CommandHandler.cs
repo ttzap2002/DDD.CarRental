@@ -1,6 +1,7 @@
 ﻿using DDD.CarRental.Core.DomainModelLayer.Factories;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.DomainModelLayer.Models;
+using DDD.SharedKernel.DomainModelLayer.Implementations;
 using DDD.SharedKernel.InfrastructureLayer;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -97,8 +98,8 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             
             if (c.CarStatus != Status.reserved)
                 throw new Exception($"This car is not rented");
-
-            r.FinishRental(c,d,command.Finished);
+            Price p = _unitOfWork.PriceRepository.getPrice(r.Started);
+            r.FinishRental(c,d,command.Finished, p);
             _unitOfWork.Commit();
         }
 

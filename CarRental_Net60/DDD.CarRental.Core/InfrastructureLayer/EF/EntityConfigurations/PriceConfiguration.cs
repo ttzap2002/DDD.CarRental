@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DDD.CarRental.Core.InfrastructureLayer.EF.EntityConfigurations
 {
-    public class PriceConfiguration : IEntityTypeConfiguration<PriceTable>
+    public class PriceConfiguration : IEntityTypeConfiguration<Tariff>
     {
-        public void Configure(EntityTypeBuilder<PriceTable> priceConfiguration)
+        public void Configure(EntityTypeBuilder<Tariff> priceConfiguration)
         {
             // ustawianie klucza głównego
             priceConfiguration.HasKey(c => c.Id);

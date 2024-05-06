@@ -42,7 +42,9 @@ namespace DDD.CarRental.ConsoleTest
             serviceCollection.AddSingleton<ICarRepository, CarRepository>();
             serviceCollection.AddSingleton<IDriverRepository, DriverRepository>();
             serviceCollection.AddSingleton<IRentalRepository, RentalRepository>();
-            
+            serviceCollection.AddSingleton<IPriceRepository, TariffRepository>();
+
+
             // registering domain model services, factories
             serviceCollection.AddSingleton<Mapper>();
             serviceCollection.AddSingleton<DiscountPolicyFactory>();
