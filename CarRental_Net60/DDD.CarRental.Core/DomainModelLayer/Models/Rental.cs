@@ -2,6 +2,7 @@
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
+using System.Data.Common;
 using System.Text;
 
 namespace DDD.CarRental.Core.DomainModelLayer.Models
@@ -34,8 +35,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this._policy = policy ?? throw new ArgumentNullException("Empty discount policy");
         }
 
-        public void FinishRental(DateTime finished)
-        {
+        public void FinishRental(DateTime finished)        {
             long minutes = (finished - Started).Minutes;
             this.Finished = finished;
             _Driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
