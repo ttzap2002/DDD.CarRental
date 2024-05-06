@@ -24,19 +24,15 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF.EntityConfigurations
 
             rentalConfiguration.HasOne<Driver>()
                .WithMany()
-               .IsRequired(false)
-               .HasForeignKey("DriverId");
+               .HasForeignKey(a => a.DriverId);
 
-            rentalConfiguration.Property<long>("DriverId").IsRequired();
             
             
             rentalConfiguration.Property<long>("CarId").IsRequired();
 
-
             rentalConfiguration.HasOne<Car>()
              .WithMany()
-             .IsRequired(false)
-             .HasForeignKey("CarId");
+             .HasForeignKey(a => a.CarId);
 
             rentalConfiguration.OwnsOne(r => r.MoneyForRental);
 

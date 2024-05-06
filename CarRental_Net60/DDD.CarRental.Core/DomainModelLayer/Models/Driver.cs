@@ -14,12 +14,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public float FreeMinutes { get; set; }
-        private List<Rental> rentals;
-
-        public IEnumerable<Rental> Rentals
-        {
-            get { return rentals.AsReadOnly(); }
-        }
+       
 
         // konstruktor na potrzeby serializacji
         protected Driver()
