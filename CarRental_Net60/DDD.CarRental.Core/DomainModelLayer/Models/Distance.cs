@@ -20,9 +20,21 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            throw new NotImplementedException();
+            switch (DistanceUnit)
+            {
+                case Unit.meter:
+                    yield return Value;
+                    break;
+                case Unit.mile:
+                    yield return Value * 1609.344;
+                    break;
+                case Unit.kilometer:
+                    yield return Value * 1000;
+                    break;
+            }
         }
     }
+
 
     public enum Unit
     {
