@@ -65,6 +65,7 @@ namespace DDD.CarRental.ConsoleTest
                 RentalId = rentalid,
                 DriverId = driverid,
                 CarId = carid1,
+                Started = DateTime.Now,
                 Position = position,
             });
 

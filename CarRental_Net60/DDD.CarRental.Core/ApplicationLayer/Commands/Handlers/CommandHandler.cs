@@ -55,7 +55,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
             IDiscountPolicy policy = this._discountPolicyFactory.Create(CountRentals);
             
-            Rental rental = new Rental(command.RentalId, DateTime.Now, command.CarId, command.DriverId);
+            Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
 
             rental.StartRental(c, command.Position);
             rental.RegisterPolicy(policy);
