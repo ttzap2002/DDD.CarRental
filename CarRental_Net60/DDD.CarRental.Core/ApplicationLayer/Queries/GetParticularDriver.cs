@@ -8,6 +8,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries
 {
     public class GetParticularDriver
     {
-        public int ID {get; set;};
+        public int ID {get; set;}
     }
 }

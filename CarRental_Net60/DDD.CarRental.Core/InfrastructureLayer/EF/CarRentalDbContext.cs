@@ -12,7 +12,8 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Car> Cars { get; set; }
         public DbSet<Rental> Rentals { get; set; }
-       
+        public DbSet<Tariff> Tariffs { get; set; }
+
 
         public CarRentalDbContext(DbContextOptions<CarRentalDbContext> options) 
             : base(options)
@@ -28,7 +29,8 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
             builder.ApplyConfiguration(new DriverConfiguration());
             builder.ApplyConfiguration(new CarConfiguration());
             builder.ApplyConfiguration(new RentalConfiguration());
-            
+            builder.ApplyConfiguration(new PriceConfiguration());
+
         }
     }
 }

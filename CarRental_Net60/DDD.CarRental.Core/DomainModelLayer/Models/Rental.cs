@@ -42,18 +42,15 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             car.CurrentPosition = position;
             this.AddDomainEvent(new StartRentalDomainEvent(this));
         }
-        public void FinishRental(Car car,Driver driver, DateTime Finish)
+        public void FinishRental(Car car,Driver driver, DateTime Finish, Money unitPrice)
         {
             car.CarStatus = Status.free;
             this.Finished = Finish;
             long minutes = (long)(Finished - Started).Value.TotalMinutes - (long)driver.FreeMinutes;
             
 
-            MoneyForRental.Amount = minutes;
+            MoneyForRental = new Money(unitPrice.Amount*minutes);
             driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
-            
-
-
             this.AddDomainEvent(new FinishRentalDomainEvent(this));
         }
 

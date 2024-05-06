@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Unit = DDD.CarRental.Core.DomainModelLayer.Models.Unit;
 
 namespace DDD.CarRental.ConsoleTest
 {
