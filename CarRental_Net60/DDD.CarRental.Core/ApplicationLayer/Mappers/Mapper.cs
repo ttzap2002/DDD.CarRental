@@ -21,5 +21,29 @@ namespace DDD.CarRental.Core.ApplicationLayer.Mappers
                 TotalDistance = car.TotalDistance
             };
         }
+
+        public DriverDTO Map(Driver driver)
+        {
+            return new DriverDTO
+            {
+                Id = driver.Id,
+                LicenceNumber = driver.LicenceNumber,
+                FirstName = driver.FirstName,
+                LastName = driver.LastName,
+                FreeMinutes = driver.FreeMinutes
+            };
+        }
+
+        public RentalDTO Map(Rental rental)
+        {
+            return new RentalDTO
+            {
+                Id = rental.Id,
+                Started = rental.Started,
+                Finished = rental.Finished,
+                CarId = rental.CarId,
+                DriverId = rental.DriverId
+            };
+        }
     }
 }

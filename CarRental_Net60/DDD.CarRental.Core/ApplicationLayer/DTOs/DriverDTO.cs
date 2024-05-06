@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
-    public class DriverDTO : Entity, IAggregateRoot
+    public class DriverDTO
     {
-        public long ID { get; set; }
+        public long Id { get; set; }
         public string LicenceNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public float FreeMinutes { get; set; }
 
-        public ICollection<Rental> DriverRentals { get; set; }
     }
 }

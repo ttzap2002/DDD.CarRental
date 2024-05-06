@@ -9,18 +9,14 @@ using System.Threading.Tasks;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
-    public class RentalDTO : Entity, IAggregateRoot
+    public class RentalDTO
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime Started { get; set; }
 
-        public DateTime Finished { get; set; }
-
-        public Car _Car { get; set; }
-        public int CarId { get; set; }
-
-        public Driver _Driver { get; set; }
-        public int DriverId { get; set; }
+        public DateTime? Finished { get; set; }
+        public long CarId { get; set; }
+        public long DriverId { get; set; }
 
     }
 }
