@@ -12,7 +12,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public Distance CurrentDistance { get; set; }
         public Distance TotalDistance { get; set; }
         public Status CarStatus { get; set; }
-        public ICollection<Rental> CarRentals { get; set; }
 
         protected Car() { }
 
@@ -23,7 +22,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             CurrentDistance = new Distance(0,Unit.kilometer);
             TotalDistance = totalDistance;
             CarStatus = Status.free;
-            CarRentals = new List<Rental>();
+            //CarRentals = new List<Rental>();
         }
     }
 

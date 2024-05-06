@@ -2,6 +2,7 @@
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace DDD.CarRental.Core.DomainModelLayer.Models
@@ -17,12 +18,12 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         public DateTime Started { get; set; }
 
-        public DateTime Finished { get; set; }
+        public DateTime? Finished { get; set; }
 
         public Money MoneyForRental { get; set; }
-
-        public long CarId { get; set; }
-        public long DriverId { get; set; }
+        
+        public long CarId { get; protected set; }
+        public long DriverId { get; protected set; }
 
         private IDiscountPolicy _policy;
 

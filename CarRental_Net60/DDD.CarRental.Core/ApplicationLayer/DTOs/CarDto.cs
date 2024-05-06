@@ -11,7 +11,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
     public class CarDTO : Entity, IAggregateRoot
     {
-        public long ID { get; set; }
         public string RegistrationNumber { get; set; }
 
         public Position CurrentPosition { get; set; }
