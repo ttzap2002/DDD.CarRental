@@ -68,5 +68,61 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
             List<CarDTO> result = cars.Select(r => this._mapper.Map(r)).ToList();
             return result;
         }
+
+
+
+        public CarDTO Execute(GetCarByRegistrationNumber query)
+        {
+            var Car = _dbContext.Cars.FirstOrDefault(x => x.RegistrationNumber == query.RegistrationNumber);
+
+            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
+            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
+            if (Car == null)
+            {
+                return null;
+            }
+            return this._mapper.Map(Car);
+        }
+
+        public List<RentalDTO> Execute(GetAllRentalInTimeInterval query)
+        {
+            DateTime end = query.End;
+            if (end == null)
+            {
+                end = DateTime.MaxValue;
+            }
+
+            var rental = _dbContext.Rentals.Where(x => x.Started >= query.Start && x.Started <= end).ToList();
+            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
+            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
+            if (rental == null)
+            {
+                throw new Exception($"Could not find rentals between {query.Start} and {query.End}");
+            }
+
+            List<RentalDTO> rentalDto = rental.Select(x => this._mapper.Map(x)).ToList();
+
+            return rentalDto;
+        }
+
+
+        public RentalDTO Execute(GetParticularRental query)
+        {
+            var rental = _dbContext.Rentals.FirstOrDefault(x => x.Id == query.rentalId);
+            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
+            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
+            if (rental == null)
+            {
+                throw new Exception($"Could not find rental '{query.rentalId}'");
+            }
+            return this._mapper.Map(rental);
+        }
+        
+
+
+
+
+
+
     }
 }

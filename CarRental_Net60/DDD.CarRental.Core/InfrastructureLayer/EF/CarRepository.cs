@@ -14,8 +14,7 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
 
         public Car GetCarByRegistrationNumber(string registration)
         {
-            return _context.Cars.Where(p => p.RegistrationNumber == registration)
-                .FirstOrDefault();
+            return _context.Cars.FirstOrDefault(p => p.RegistrationNumber == registration);
         }
     }
 }
