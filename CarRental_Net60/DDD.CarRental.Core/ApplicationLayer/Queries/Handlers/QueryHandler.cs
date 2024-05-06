@@ -87,21 +87,16 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
         public List<RentalDTO> Execute(GetAllRentalInTimeInterval query)
         {
             DateTime end = query.End;
-            if (end == null)
+            if (end == DateTime.MinValue)
             {
                 end = DateTime.MaxValue;
             }
-
             var rental = _dbContext.Rentals.Where(x => x.Started >= query.Start && x.Started <= end).ToList();
-            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
-            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
             if (rental == null)
             {
                 throw new Exception($"Could not find rentals between {query.Start} and {query.End}");
             }
-
             List<RentalDTO> rentalDto = rental.Select(x => this._mapper.Map(x)).ToList();
-
             return rentalDto;
         }
 
@@ -109,15 +104,22 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
         public RentalDTO Execute(GetParticularRental query)
         {
             var rental = _dbContext.Rentals.FirstOrDefault(x => x.Id == query.rentalId);
-            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
-            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
             if (rental == null)
             {
                 throw new Exception($"Could not find rental '{query.rentalId}'");
             }
             return this._mapper.Map(rental);
         }
-        
+
+        public DriverDTO Execute(GetParticularDriver query)
+        {
+            var driver = _dbContext.Drivers.FirstOrDefault(x => x.Id == query.ID);
+            if (driver == null)
+            {
+                throw new Exception($"Could not find driver '{query.ID}'");
+            }
+            return this._mapper.Map(driver);
+        }
 
 
 

@@ -1,5 +1,7 @@
 ﻿using DDD.CarRental.Core.ApplicationLayer.Commands;
 using DDD.CarRental.Core.ApplicationLayer.Commands.Handlers;
+using DDD.CarRental.Core.ApplicationLayer.DTOs;
+using DDD.CarRental.Core.ApplicationLayer.Queries;
 using DDD.CarRental.Core.ApplicationLayer.Queries.Handlers;
 using DDD.CarRental.Core.DomainModelLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +48,7 @@ namespace DDD.CarRental.ConsoleTest
             Console.WriteLine("Utworzono kierowcę");
 
             Position pos = new Position(
-                10f, 12f, Unit.mile);
+                10f, 12f, Core.DomainModelLayer.Models.Unit.mile);
 
             _commandHandler.Execute(new CreateCarCommand()
             {
@@ -70,6 +72,15 @@ namespace DDD.CarRental.ConsoleTest
             });
 
             Console.WriteLine("Utworzono wypożyczenie");
+
+            List<RentalDTO> rentalInParticularInterval = _queryHandler.Execute(new GetAllRentalInTimeInterval()
+            { Start = DateTime.Now });
+
+            foreach(var r in rentalInParticularInterval) 
+            {
+                Console.WriteLine(r.Started);
+            }
+
         }
     }
 }
