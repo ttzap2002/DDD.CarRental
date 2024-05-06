@@ -6,7 +6,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
     public class Car : Entity, IAggregateRoot
     {
-        public long ID { get; set; }
         public string RegistrationNumber { get; set; }
 
         public Position CurrentPosition { get; set; }
