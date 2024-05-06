@@ -11,11 +11,22 @@ namespace DDD.CarRental.Core.ApplicationLayer.DTOs
     public class DistanceDTO : ValueObject
     {
         public float Value { get; set; }
-        public Unit Unit { get; set; }
+        public Unit unit { get; set; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            throw new NotImplementedException();
+            switch (unit)
+            {
+                case Unit.meter:
+                    yield return Value;
+                    break;
+                case Unit.mile:
+                    yield return Value * 1609.344;
+                    break;
+                case Unit.kilometer:
+                    yield return Value*1000;
+                    break;
+            }
         }
     }
 }
