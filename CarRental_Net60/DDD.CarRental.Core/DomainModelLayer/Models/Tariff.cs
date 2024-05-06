@@ -13,5 +13,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public Price unitPrice { get; set; }
+
+        protected Tariff() { }
+
+        public Tariff(long Id, DateTime startTime, Price unitPrice) : base(Id)
+        {
+            StartTime = startTime;
+            this.unitPrice = unitPrice;
+        }
     }
 }
