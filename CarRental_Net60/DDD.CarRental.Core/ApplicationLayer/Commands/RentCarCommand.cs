@@ -1,4 +1,5 @@
-﻿using DDD.SharedKernel.DomainModelLayer.Implementations;
+﻿using DDD.CarRental.Core.DomainModelLayer.Models;
+using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands
         public long RentalId { get; set; }
         public long DriverId { get; set; }
         public long CarId { get; set; }
+        public Position Position { get; set; }
     }
 }

@@ -58,12 +58,14 @@ namespace DDD.CarRental.ConsoleTest
 
             Console.WriteLine("Utworzono auto");
 
+            Position position = new(1,2, Unit.kilometer);
 
             _commandHandler.Execute(new RentCarCommand()
             {
                 RentalId = rentalid,
                 DriverId = driverid,
                 CarId = carid1,
+                Position = position,
             });
 
             Console.WriteLine("Utworzono wypożyczenie");

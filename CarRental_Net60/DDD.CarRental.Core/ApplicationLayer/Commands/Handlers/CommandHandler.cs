@@ -52,13 +52,12 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (c.CarStatus != Status.free)
                 throw new Exception($"This car is not avalaible");
 
-
             int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
             IDiscountPolicy policy = this._discountPolicyFactory.Create(CountRentals);
             
             Rental rental = new Rental(command.RentalId, DateTime.Now, command.CarId, command.DriverId);
 
-            rental.StartRental(c);
+            rental.StartRental(c, command.Position);
             rental.RegisterPolicy(policy);
 
             _unitOfWork.RentalRepository.Insert(rental);
@@ -98,9 +97,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (c.CarStatus != Status.reserved)
                 throw new Exception($"This car is not rented");
 
-            //To na dole trzeba zrobić tymi handlerami! To samo z położeniem chyba
-            //c.CarStatus = Status.free;
-            // c.CurrentPosition = x;
+            
             r.FinishRental(command.Finished,d) ;
             _unitOfWork.Commit();
         }

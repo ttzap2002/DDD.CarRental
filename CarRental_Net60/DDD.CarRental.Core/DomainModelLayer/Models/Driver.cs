@@ -19,7 +19,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         // konstruktor na potrzeby serializacji
         protected Driver()
         { }
-
         public Driver(string licenceNumber, string firstName, string lastName, long ID)
             : base(ID)
         {

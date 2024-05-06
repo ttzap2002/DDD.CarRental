@@ -35,9 +35,10 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this._policy = policy ?? throw new ArgumentNullException("Empty discount policy");
         }
 
-        public void StartRental(Car car)
+        public void StartRental(Car car, Position position)
         {
             car.CarStatus = Status.rental;
+            car.CurrentPosition = position;
             this.AddDomainEvent(new StartRentalDomainEvent(this));
         }
         public void FinishRental(DateTime finished,Driver driver)
@@ -45,6 +46,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             long minutes = (finished - Started).Minutes;
             this.Finished = finished;
             driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
+            
 
             this.AddDomainEvent(new FinishRentalDomainEvent(this));
         }
