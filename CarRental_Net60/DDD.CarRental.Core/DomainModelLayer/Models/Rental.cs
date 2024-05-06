@@ -21,10 +21,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         public Money MoneyForRental { get; set; }
 
-        public Car _Car { get; set; }
         public long CarId { get; set; }
-
-        public Driver _Driver { get; set; }
         public long DriverId { get; set; }
 
         private IDiscountPolicy _policy;
@@ -34,11 +31,11 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this._policy = policy ?? throw new ArgumentNullException("Empty discount policy");
         }
 
-        public void FinishRental(DateTime finished)
+        public void FinishRental(DateTime finished,Driver driver)
         {
             long minutes = (finished - Started).Minutes;
             this.Finished = finished;
-            _Driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
+            driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
 
 
             //this.AddDomainEvent(new VisitFishedDomainEvent(this));
