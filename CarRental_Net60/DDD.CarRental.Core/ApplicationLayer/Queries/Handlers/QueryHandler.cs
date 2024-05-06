@@ -8,6 +8,7 @@ using DDD.CarRental.Core.DomainModelLayer.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Channels;
 
 namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
 {
@@ -31,5 +32,32 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
             List<CarDTO> result = cars.Select(r => this._mapper.Map(r)).ToList();
             return result;
         }
+
+
+        public List<DriverDTO> Execute(GetAllDriverQuery query)
+        {
+            var drivers = _dbContext.Drivers
+                .AsNoTracking()
+                .ToList();
+
+            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
+            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
+            List<DriverDTO> result = drivers.Select(r => this._mapper.Map(r)).ToList();
+            return result;
+        }
+
+        public List<RentalDTO> Execute(GetAllRentalsQuery query)
+        {
+            var rentals = _dbContext.Rentals
+                .AsNoTracking()
+                .ToList();
+
+            // mapowanie obiektów biznesowych na transferowe warto powierzyć maperom 
+            // (własnym - jak tutaj lub bibliotecznym, np. Automaper)
+            List<RentalDTO> result = rentals.Select(r => this._mapper.Map(r)).ToList();
+            return result;
+        }
+
+
     }
 }

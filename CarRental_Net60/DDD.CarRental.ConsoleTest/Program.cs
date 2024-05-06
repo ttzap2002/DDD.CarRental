@@ -1,6 +1,7 @@
 ﻿using DDD.CarRental.Core.ApplicationLayer.Commands.Handlers;
 using DDD.CarRental.Core.ApplicationLayer.Mappers;
 using DDD.CarRental.Core.ApplicationLayer.Queries.Handlers;
+using DDD.CarRental.Core.DomainModelLayer.Factories;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.InfrastructureLayer.EF;
 using DDD.SharedKernel.DomainModelLayer;
@@ -44,6 +45,7 @@ namespace DDD.CarRental.ConsoleTest
             
             // registering domain model services, factories
             serviceCollection.AddSingleton<Mapper>();
+            serviceCollection.AddSingleton<DiscountPolicyFactory>();
 
             // ToDo: Zarejestruj pozostałe usługi, fabryki, polityki, itp.
         }
