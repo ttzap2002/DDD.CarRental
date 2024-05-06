@@ -1,4 +1,5 @@
-﻿using DDD.SharedKernel.DomainModelLayer;
+﻿using DDD.CarRental.Core.DomainModelLayer.Events;
+using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System.Collections.Generic;
 
@@ -22,7 +23,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             CurrentDistance = new Distance(0,Unit.kilometer);
             TotalDistance = totalDistance;
             CarStatus = Status.free;
-            //CarRentals = new List<Rental>();
+            
+            this.AddDomainEvent(new CreateCarDomainEvent(id, registrationNumber, currentPosition, CurrentDistance, totalDistance, CarStatus));
         }
     }
 
