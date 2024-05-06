@@ -9,6 +9,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Interfaces
 {
     public interface IPriceRepository
     {
-        Price getPrice(DateTime time);
+        Money getPrice(DateTime time);
     }
 }

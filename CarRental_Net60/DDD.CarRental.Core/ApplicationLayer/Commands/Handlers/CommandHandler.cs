@@ -96,10 +96,10 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (d == null)
                 throw new Exception($"Driver '{r.DriverId}' didn't exists.");
             
-            if (c.CarStatus != Status.reserved)
+            if (c.CarStatus != Status.rental)
                 throw new Exception($"This car is not rented");
-            Price p = _unitOfWork.PriceRepository.getPrice(r.Started);
-            r.FinishRental(c,d,command.Finished, p);
+            Money m = _unitOfWork.PriceRepository.getPrice(r.Started);
+            r.FinishRental(c,d,command.Finished, m);
             _unitOfWork.Commit();
         }
 

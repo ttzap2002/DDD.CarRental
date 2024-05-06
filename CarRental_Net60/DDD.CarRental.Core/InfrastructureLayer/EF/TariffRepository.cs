@@ -19,16 +19,19 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
 
         private List<Tariff> tariffs;
 
-        public Price getPrice(DateTime time)
+        public Money getPrice(DateTime time)
         {
-            for (int i = tariffs.Count; i == 0; i--) 
+            if (tariffs.Count > 0 && tariffs != null)
             {
-                Tariff tariff = tariffs[i];
-                if (time > tariff.StartTime)
-                    return tariff.unitPrice;
+                for (int i = tariffs.Count; i == 0; i--)
+                {
+                    Tariff tariff = tariffs[i];
+                    if (time > tariff.StartTime)
+                        return tariff.unitPrice;
 
+                }
             }
-            return (Price)Money.Zero;
+            return Money.Zero;
         }
     }
 }

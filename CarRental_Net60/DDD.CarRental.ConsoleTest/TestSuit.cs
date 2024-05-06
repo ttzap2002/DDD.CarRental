@@ -82,6 +82,12 @@ namespace DDD.CarRental.ConsoleTest
                 Console.WriteLine(r.Started);
             }
 
+            _commandHandler.Execute(new ReturnCarCommand()
+            {
+                RentalId = rentalid,
+                Finished = DateTime.Now.AddDays(1),
+            });
+
         }
     }
 }
