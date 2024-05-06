@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DDD.CarRental.Core.DomainModelLayer.Models;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
