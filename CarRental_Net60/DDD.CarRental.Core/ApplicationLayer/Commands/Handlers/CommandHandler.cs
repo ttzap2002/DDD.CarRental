@@ -101,7 +101,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             //To na dole trzeba zrobić tymi handlerami! To samo z położeniem chyba
             //c.CarStatus = Status.free;
             // c.CurrentPosition = x;
-            r.FinishRental(command.Finished) ;
+            r.FinishRental(command.Finished,d) ;
             _unitOfWork.Commit();
         }
 
