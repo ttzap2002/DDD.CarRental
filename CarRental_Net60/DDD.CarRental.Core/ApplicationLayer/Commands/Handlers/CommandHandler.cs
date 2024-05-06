@@ -51,17 +51,14 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
                 throw new Exception($"Repository is currently exists.");
             if (c.CarStatus != Status.free)
                 throw new Exception($"This car is not avalaible");
-            if (command.Started < DateTime.Now)
-                throw new Exception($"Start data cannot be  avalaible");
-            c.CarStatus = Status.rental;
+
 
             int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
-
             IDiscountPolicy policy = this._discountPolicyFactory.Create(CountRentals);
             
-            string driveFirstLastName = $"{d.FirstName} {d.LastName}";
-            Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
+            Rental rental = new Rental(command.RentalId, DateTime.Now, command.CarId, command.DriverId);
 
+            rental.StartRental(c);
             rental.RegisterPolicy(policy);
 
             _unitOfWork.RentalRepository.Insert(rental);

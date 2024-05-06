@@ -61,7 +61,6 @@ namespace DDD.CarRental.ConsoleTest
 
             _commandHandler.Execute(new RentCarCommand()
             {
-                Started = DateTime.Now.AddDays(1),
                 RentalId = rentalid,
                 DriverId = driverid,
                 CarId = carid1,
