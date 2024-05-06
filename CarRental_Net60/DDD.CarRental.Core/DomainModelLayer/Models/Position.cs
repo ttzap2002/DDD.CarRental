@@ -29,6 +29,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             Y = y;
             Unit = un;
         }
+
+        public Distance CalculateDistance(Position d)
+        {
+            float squaredResult = (d.X - X ) * (d.X - X) + (d.Y - Y) * (d.Y - Y);
+            return new Distance((float)Math.Sqrt(squaredResult),Unit);
+        }
+
     }
 
 }
