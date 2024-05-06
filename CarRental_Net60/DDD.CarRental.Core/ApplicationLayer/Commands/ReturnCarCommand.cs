@@ -10,8 +10,6 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands
     public class ReturnCarCommand
     {
         public DateTime Finished { get; set; }
-        public long DriverId { get; set; }
-        public long CarId { get; set; }
         public long RentalId { get; set; }
     }
 }

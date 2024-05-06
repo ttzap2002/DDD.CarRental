@@ -84,21 +84,21 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
         public void Execute(ReturnCarCommand command)
         {
 
-            Car c = _unitOfWork.CarRepository.Get(command.CarId);
-            if (c == null)
-                throw new Exception($"Car '{command.CarId}' didn't exists.");
-            Driver d = _unitOfWork.DriverRepository.Get(command.DriverId);
-            if (d == null)
-                throw new Exception($"Driver '{command.DriverId}' didn't exists.");
             Rental r = _unitOfWork.RentalRepository.GetRentalID(command.RentalId);
             if (r == null)
                 throw new Exception($"Rental with ID {command.RentalId} doesn't exist");
 
+            Car c = _unitOfWork.CarRepository.Get(r.CarId);
+            if (c == null)
+                throw new Exception($"Car '{r.CarId}' didn't exists.");
+            Driver d = _unitOfWork.DriverRepository.Get(r.DriverId);
+            if (d == null)
+                throw new Exception($"Driver '{r.DriverId}' didn't exists.");
+            
             if (c.CarStatus != Status.reserved)
                 throw new Exception($"This car is not rented");
 
-            
-            r.FinishRental(command.Finished,d) ;
+            r.FinishRental(c,d,command.Finished);
             _unitOfWork.Commit();
         }
 

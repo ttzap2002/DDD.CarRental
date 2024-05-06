@@ -17,7 +17,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Factories
 
 
 
-            int rentalsCount = rentals; //driver.Rentals.Count();
+            int rentalsCount = rentals; 
 
             if (rentalsCount>10 && rentalsCount % 2 == 0)
                 returner = new VipDiscountPolicy();
