@@ -58,6 +58,15 @@ namespace DDD.CarRental.Core.ApplicationLayer.Queries.Handlers
             return result;
         }
 
+        public List<CarDTO> Execute(GetAllFreeCarsQuery quey)
+        {
+            var cars = _dbContext.Cars
+                .AsNoTracking()
+                .Where(p => p.CarStatus == 0)
+                .ToList();
 
+            List<CarDTO> result = cars.Select(r => this._mapper.Map(r)).ToList();
+            return result;
+        }
     }
 }
