@@ -15,9 +15,10 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
     {
         private DiscountPolicyFactory _discountPolicyFactory;
         private ICarRentalUnitOfWork _unitOfWork;
-        public CommandHandler(DiscountPolicyFactory discountPolicyFactory)
+        public CommandHandler(ICarRentalUnitOfWork UnitOFWORK, DiscountPolicyFactory discountPolicyFactory)
         {
             _discountPolicyFactory = discountPolicyFactory;
+            _unitOfWork = UnitOFWORK;
         }
 
         public void Execute(CreateCarCommand command)
@@ -52,7 +53,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
                 throw new Exception($"This car is not avalaible");
             if (command.Started < DateTime.Now)
                 throw new Exception($"Start data cannot be  avalaible");
-            c.CarStatus = Status.reserved;
+            c.CarStatus = Status.rental;
 
             int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
 
@@ -68,7 +69,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
         }
         public void Execute(CreateDriverCommand command)
         {
-            Driver driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
+            Driver? driver = _unitOfWork.DriverRepository.GetDriver(command.DriverId);
 
             if (driver != null)
                 throw new InvalidOperationException($"Driver '{command.DriverId}' already exists.");

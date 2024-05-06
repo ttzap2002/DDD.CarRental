@@ -1,5 +1,7 @@
-﻿using DDD.CarRental.Core.ApplicationLayer.Commands.Handlers;
+﻿using DDD.CarRental.Core.ApplicationLayer.Commands;
+using DDD.CarRental.Core.ApplicationLayer.Commands.Handlers;
 using DDD.CarRental.Core.ApplicationLayer.Queries.Handlers;
+using DDD.CarRental.Core.DomainModelLayer.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,14 +19,55 @@ namespace DDD.CarRental.ConsoleTest
         public TestSuit(IServiceCollection serviceCollection)
         {
             _serviceProvide = serviceCollection.BuildServiceProvider();
-
             _commandHandler = _serviceProvide.GetRequiredService<CommandHandler>();
             _queryHandler = _serviceProvide.GetRequiredService<QueryHandler>();
         }
 
         public void Run()
         {
-            // ToDo: scenariusz testowy
+            long carid = 11;
+            long carid1 = 21;
+            long driverid = 22;
+            long driverid1 = 31;
+            long rentalid = 32;
+            long rentalid1 = 41;
+            long posiotionid = 42;
+
+            //tworzymy drivera
+            _commandHandler.Execute(new CreateDriverCommand
+            {
+                DriverId = driverid,
+                LicenceNumber = "Abc1233",
+                FirstName = "first",
+                LastName = "second",
+            }); ;
+
+            // pobieramy info o pokoju zagadek
+            Console.WriteLine("Utworzono kierowcę");
+
+            Position pos = new Position(
+                10f, 12f, Unit.mile);
+
+            _commandHandler.Execute(new CreateCarCommand()
+            {
+                ID = carid1,
+                TotalDistance = new Core.DomainModelLayer.Models.Distance(100, Core.DomainModelLayer.Models.Unit.kilometer),
+                CurrentPosition = pos,
+                RegistrationNumber = "FFGRKRTHTRRH",
+            });
+
+            Console.WriteLine("Utworzono auto");
+
+
+            _commandHandler.Execute(new RentCarCommand()
+            {
+                Started = DateTime.Now.AddDays(1),
+                RentalId = rentalid,
+                DriverId = driverid,
+                CarId = carid1,
+            });
+
+            Console.WriteLine("Utworzono wypożyczenie");
         }
     }
 }

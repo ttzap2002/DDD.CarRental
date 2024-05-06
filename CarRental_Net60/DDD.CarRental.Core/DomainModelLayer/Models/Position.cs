@@ -22,6 +22,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
         protected Position()
         { }
+
+        public Position(float x, float y, Unit un)
+        {
+            X = x;
+            Y = y;
+            Unit = un;
+        }
     }
 
 }
