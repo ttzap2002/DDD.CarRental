@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
-    public class CarDTO : Entity, IAggregateRoot
+    public class CarDTO
     {
+        public long Id { get; set; }
         public string RegistrationNumber { get; set; }
 
         public Position CurrentPosition { get; set; }
         public Distance CurrentDistance { get; set; }
         public Distance TotalDistance { get; set; }
-        public ICollection<Rental> CarRentals { get; set; }
     }
 
     public enum Status
