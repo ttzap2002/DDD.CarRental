@@ -46,5 +46,15 @@ namespace DDD.CarRental.Core.ApplicationLayer.Mappers
                 MoneyForRental = rental.MoneyForRental
             };
         }
+
+        public TariffDTO Map(Tariff tarrif)
+        {
+            return new TariffDTO
+            {
+                EndTime = tarrif.EndTime,
+                StartTime = tarrif.StartTime,
+                unitPrice = tarrif.unitPrice
+            };
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
 
         public void Execute(RentCarCommand command)
         {
-            
+
             Car c = _unitOfWork.CarRepository.Get(command.CarId);
             if (c == null)
                 throw new Exception($"Car '{command.CarId}' didn't exists.");
@@ -55,7 +55,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
 
             int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
             IDiscountPolicy policy = this._discountPolicyFactory.Create(CountRentals);
-            
+
             Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
 
             rental.StartRental(c, command.Position);
@@ -103,6 +103,17 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _unitOfWork.Commit();
         }
 
+        public void Execute(CreatePrice command)
+        {
+            Tariff t = _unitOfWork.PriceRepository.Get(command.Id);
+            if (t != null)
+                throw new Exception($"Tarrif with ID {command.Id} already exist");
+
+            t = new Tariff(command.Id, command.StartTime, command.UnitPrice);
+            _unitOfWork.PriceRepository.Insert(t);
+            _unitOfWork.PriceRepository.addTariff(t);
+            _unitOfWork.Commit();
+        }
     }
 }
 

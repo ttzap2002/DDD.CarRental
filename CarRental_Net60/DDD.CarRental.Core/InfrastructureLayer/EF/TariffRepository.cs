@@ -23,7 +23,7 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         {
             if (tariffs.Count > 0 && tariffs != null)
             {
-                for (int i = tariffs.Count; i == 0; i--)
+                for (int i = tariffs.Count-1; i >= 0; i--)
                 {
                     Tariff tariff = tariffs[i];
                     if (time > tariff.StartTime)
@@ -32,6 +32,17 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
                 }
             }
             return Money.Zero;
+        }
+
+        public void addTariff(Tariff tariff) 
+        {
+            tariffs.Add(tariff);
+            Refresh();
+        }
+
+        private void Refresh() 
+        {
+            tariffs.OrderBy(x => x.StartTime).ToList();
         }
     }
 }

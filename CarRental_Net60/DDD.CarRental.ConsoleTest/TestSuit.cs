@@ -4,6 +4,7 @@ using DDD.CarRental.Core.ApplicationLayer.DTOs;
 using DDD.CarRental.Core.ApplicationLayer.Queries;
 using DDD.CarRental.Core.ApplicationLayer.Queries.Handlers;
 using DDD.CarRental.Core.DomainModelLayer.Models;
+using DDD.SharedKernel.DomainModelLayer.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -81,6 +82,9 @@ namespace DDD.CarRental.ConsoleTest
             {
                 Console.WriteLine(r.Started);
             }
+
+
+            _commandHandler.Execute(new CreatePrice() { Id = 1, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.01m, "zł") });
 
             _commandHandler.Execute(new ReturnCarCommand()
             {
