@@ -7,6 +7,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Interfaces
     public interface IRentalRepository : IRepository<Rental>
     {
         Rental GetRentalID(long rentalID);
+        int GetDriverRentalsCount(long driverID);
     }
+
 
 }

@@ -54,7 +54,9 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
                 throw new Exception($"Start data cannot be  avalaible");
             c.CarStatus = Status.reserved;
 
-            IDiscountPolicy policy = this._discountPolicyFactory.Create(d);
+            int CountRentals = _unitOfWork.RentalRepository.GetDriverRentalsCount(command.DriverId);
+
+            IDiscountPolicy policy = this._discountPolicyFactory.Create(CountRentals);
             
             string driveFirstLastName = $"{d.FirstName} {d.LastName}";
             Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);

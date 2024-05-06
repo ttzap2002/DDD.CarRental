@@ -11,11 +11,13 @@ namespace DDD.CarRental.Core.DomainModelLayer.Factories
 {
     public class DiscountPolicyFactory
     {
-        public IDiscountPolicy Create(Driver driver)
+        public IDiscountPolicy Create(int rentals)
         {
             IDiscountPolicy returner = new StandardDiscountPolicy();
 
-            int rentalsCount = 0; //driver.Rentals.Count();
+
+
+            int rentalsCount = rentals; //driver.Rentals.Count();
 
             if (rentalsCount>10 && rentalsCount % 2 == 0)
                 returner = new VipDiscountPolicy();
