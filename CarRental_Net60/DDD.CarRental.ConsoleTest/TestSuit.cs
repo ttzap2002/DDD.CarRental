@@ -37,6 +37,9 @@ namespace DDD.CarRental.ConsoleTest
             long rentalid1 = 41;
             long posiotionid = 42;
 
+
+
+
             //tworzymy drivera
             _commandHandler.Execute(new CreateDriverCommand
             {
@@ -82,6 +85,7 @@ namespace DDD.CarRental.ConsoleTest
             {
                 Console.WriteLine(r.Started);
             }
+
 
 
             _commandHandler.Execute(new CreatePrice() { Id = 1, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.01m, "zł") });

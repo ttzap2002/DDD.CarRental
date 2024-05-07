@@ -1,4 +1,5 @@
-﻿using DDD.CarRental.Core.DomainModelLayer.Interfaces;
+﻿using DDD.CarRental.Core.DomainModelLayer.Calculation;
+using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.DomainModelLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -24,17 +25,21 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
             return _context.Rentals.Where(p=>p.DriverId == driverID).Count();   
         }
 
-        public Position GetFinishedPosition(long rentalID)
+        public Position GetFinishedPosition(long rentalID, Unit targetUnit)
         {
             Rental rental = GetRentalID(rentalID);
             Car car = _context.Cars.Where(c=>c.Id == rental.CarId).FirstOrDefault();
             Position position = car.CurrentPosition;
+
 
             Random r = new Random();
 
             position.X = position.X + (float)(r.NextDouble()-r.NextDouble())*(float)10;
             position.Y = position.Y + (float)(r.NextDouble() - r.NextDouble()) * (float)10;
 
+            position.X = UnitConverter.Converter(position.X, position.Unit, targetUnit).Item1;
+            position.Y = UnitConverter.Converter(position.X, position.Unit, targetUnit).Item1;
+            position.Unit = targetUnit;
             return position;
 
         }

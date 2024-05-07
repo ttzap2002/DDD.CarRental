@@ -116,6 +116,12 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             _unitOfWork.PriceRepository.addTariff(t);
             _unitOfWork.Commit();
         }
+
+        public void Execute(RejectChangesCommand command) 
+        {
+            _unitOfWork.RejectChanges();
+        }
+
     }
 }
 
