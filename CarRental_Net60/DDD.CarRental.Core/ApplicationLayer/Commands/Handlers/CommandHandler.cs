@@ -16,10 +16,12 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
     {
         private DiscountPolicyFactory _discountPolicyFactory;
         private ICarRentalUnitOfWork _unitOfWork;
-        public CommandHandler(ICarRentalUnitOfWork UnitOFWORK, DiscountPolicyFactory discountPolicyFactory)
+        private IGetNewPositionService _getNewPositionService;
+        public CommandHandler(ICarRentalUnitOfWork UnitOFWORK, DiscountPolicyFactory discountPolicyFactory, IGetNewPositionService getNewPositionService)
         {
             _discountPolicyFactory = discountPolicyFactory;
             _unitOfWork = UnitOFWORK;
+            _getNewPositionService = getNewPositionService;
         }
 
         public void Execute(CreateCarCommand command)
@@ -99,7 +101,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (c.CarStatus != Status.rental)
                 throw new Exception($"This car is not rented");
             Money m = _unitOfWork.PriceRepository.getPrice(r.Started);
-            Position p = _unitOfWork.RentalRepository.GetFinishedPosition(command.RentalId);
+            Position p = _getNewPositionService.GetPosition(command.RentalId, r, c);
 
             r.FinishRental(c,d,command.Finished, m, p);
             _unitOfWork.Commit();

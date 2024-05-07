@@ -5,6 +5,7 @@ using DDD.CarRental.Core.DomainModelLayer.Calculation;
 using DDD.CarRental.Core.DomainModelLayer.Factories;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.CarRental.Core.DomainModelLayer.Models;
+using DDD.CarRental.Core.DomainModelLayer.Services;
 using DDD.CarRental.Core.InfrastructureLayer.EF;
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.InfrastructureLayer.Implementations;
@@ -49,6 +50,7 @@ namespace DDD.CarRental.ConsoleTest
 
 
             // registering domain model services, factories
+            serviceCollection.AddSingleton<IGetNewPositionService ,GetNewPositionService>();
             serviceCollection.AddSingleton<Mapper>();
             serviceCollection.AddSingleton<DiscountPolicyFactory>();
 

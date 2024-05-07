@@ -8,7 +8,6 @@ namespace DDD.CarRental.Core.DomainModelLayer.Interfaces
     {
         Rental GetRentalID(long rentalID);
         int GetDriverRentalsCount(long driverID);
-        Position GetFinishedPosition(long rentalID);
     }
 
 

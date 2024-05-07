@@ -109,8 +109,12 @@ namespace DDD.CarRental.ConsoleTest
             _commandHandler.Execute(new CreatePrice() { Id = 4, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.20m, "zł") });
 
             RentCar(rentID:1, drivId:1, cId:1, DateTime.Now);
+
+            Console.WriteLine("Utworzono wypożyczenie");
+
             ReturnCar(rentalId: 1, finished: DateTime.Now.AddDays(1));
 
+            Console.WriteLine("Zwrócono wypożyczenie");
 
             RentCar(rentID:2, drivId:2, cId:2, DateTime.Now);
             ReturnCar(rentalId:2, finished: DateTime.Now.AddDays(2));
@@ -145,9 +149,6 @@ namespace DDD.CarRental.ConsoleTest
             RentCar(rentID: 17, drivId: 1, cId: 1, DateTime.Now);
             ReturnCar(rentalId: 17, finished: DateTime.Now.AddDays(1));
 
-
-            Console.WriteLine("Utworzono wypożyczenie");
-
             //List<RentalDTO> rentalInParticularInterval = _queryHandler.Execute(new GetAllRentalInTimeInterval()
             //{ Start = DateTime.Now });
 
@@ -156,7 +157,7 @@ namespace DDD.CarRental.ConsoleTest
             //    Console.WriteLine(r.Started);
             //}
 
-            Console.WriteLine("Zwrócono wypożyczenie");
+            
 
         }
     }
