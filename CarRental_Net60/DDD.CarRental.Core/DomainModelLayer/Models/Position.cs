@@ -1,6 +1,7 @@
 ﻿using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
 namespace DDD.CarRental.Core.DomainModelLayer.Models
@@ -35,6 +36,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             float squaredResult = (d.X - X ) * (d.X - X) + (d.Y - Y) * (d.Y - Y);
             return new Distance((float)Math.Sqrt(squaredResult),Unit);
         }
+
+        
 
     }
 

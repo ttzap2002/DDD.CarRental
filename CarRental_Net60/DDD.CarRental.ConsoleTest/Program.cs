@@ -1,8 +1,10 @@
 ﻿using DDD.CarRental.Core.ApplicationLayer.Commands.Handlers;
 using DDD.CarRental.Core.ApplicationLayer.Mappers;
 using DDD.CarRental.Core.ApplicationLayer.Queries.Handlers;
+using DDD.CarRental.Core.DomainModelLayer.Calculation;
 using DDD.CarRental.Core.DomainModelLayer.Factories;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
+using DDD.CarRental.Core.DomainModelLayer.Models;
 using DDD.CarRental.Core.InfrastructureLayer.EF;
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.InfrastructureLayer.Implementations;
@@ -15,6 +17,7 @@ namespace DDD.CarRental.ConsoleTest
     {
         static void Main(string[] args)
         {
+            
             // create and configure DI container
             IServiceCollection serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);

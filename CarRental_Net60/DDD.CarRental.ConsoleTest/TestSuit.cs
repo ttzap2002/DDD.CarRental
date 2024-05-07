@@ -102,6 +102,7 @@ namespace DDD.CarRental.ConsoleTest
 
             Console.WriteLine("Utworzono auta");
 
+
             _commandHandler.Execute(new CreatePrice() { Id = 1, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.01m, "zł") });
             _commandHandler.Execute(new CreatePrice() { Id = 2, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.05m, "zł") });
             _commandHandler.Execute(new CreatePrice() { Id = 3, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.10m, "zł") });

@@ -1,6 +1,7 @@
 ﻿using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -58,8 +59,22 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         }
 
         public void Dispose()
-        { }
+        {
+            _dbContext.Dispose();
+        }
         public void RejectChanges()
-        { }
+        {
+            foreach (var entry in _dbContext.ChangeTracker.Entries())
+            {
+                if (entry.State == EntityState.Modified || entry.State == EntityState.Added)
+                {
+                    entry.State = EntityState.Unchanged;
+                }
+                else if (entry.State == EntityState.Deleted)
+                {
+                    entry.Reload();
+                }
+            }
+        }
     }
 }

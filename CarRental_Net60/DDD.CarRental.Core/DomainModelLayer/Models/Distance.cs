@@ -38,9 +38,15 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
 
     public enum Unit
     {
-        meter,
-        kilometer,
-        mile
+        meter = 0,
+        kilometer = 1,
+        centimeter = 2,
+        millimeter = 3,
+        mile = 4,
+        inch = 5,
+        foot = 6,
+        yard = 7    
+
     }
 
 }
