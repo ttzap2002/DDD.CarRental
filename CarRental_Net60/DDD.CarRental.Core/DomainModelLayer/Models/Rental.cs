@@ -5,6 +5,7 @@ using DDD.SharedKernel.DomainModelLayer.Implementations;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Xml.Schema;
 
 namespace DDD.CarRental.Core.DomainModelLayer.Models
 {
@@ -45,6 +46,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public void FinishRental(Car car,Driver driver, DateTime Finish, Money unitPrice, Position position)
         {
             car.CarStatus = Status.free;
+            car.TotalDistance.Value = (car.TotalDistance + position.CalculateDistance(car.CurrentPosition)).Value;
+
             car.CurrentPosition = position;
             this.Finished = Finish;
             

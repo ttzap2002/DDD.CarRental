@@ -176,10 +176,6 @@ namespace DDD.CarRental.ConsoleTest
                 PrintResult(drivers);
                 PrintResult(rentals);
 
-
-
-
-
         }
     }
 }

@@ -17,16 +17,17 @@ namespace DDD.CarRental.Core.DomainModelLayer.Services
             Rental rent = r;
             Car car = c;
             Position position = car.CurrentPosition;
+            Position newposition = new Position(21,3, position.Unit);
 
             Random rand = new Random();
 
             float parameter = 10000;
             float coefficient = UnitConverter.Converter(parameter, Unit.meter, car.CurrentPosition.Unit).Item1;
 
-            position.X = position.X + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
-            position.Y = position.Y + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
+            newposition.X = position.X + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
+            newposition.Y = position.Y + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
 
-            return position;
+            return newposition;
         }
     }
 }
