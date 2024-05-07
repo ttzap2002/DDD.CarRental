@@ -37,7 +37,12 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             return new Distance((float)Math.Sqrt(squaredResult),Unit);
         }
 
-        
+        public override string ToString()
+        {
+            return $"postion X = {X} position Y = {Y}";
+        }
+
+
 
     }
 

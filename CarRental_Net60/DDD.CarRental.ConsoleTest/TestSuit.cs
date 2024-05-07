@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Unit = DDD.CarRental.Core.DomainModelLayer.Models.Unit;
@@ -158,6 +160,25 @@ namespace DDD.CarRental.ConsoleTest
             //}
 
             
+
+
+                void PrintResult(List<ITransactionObject> lista) 
+                {
+                    foreach (var item in lista)
+                        Console.WriteLine(item.ToString());
+                }
+
+                List<ITransactionObject> car = _queryHandler.Execute(new GetAllCarsQuery()).Cast<ITransactionObject>().ToList();
+                List<ITransactionObject> drivers = _queryHandler.Execute(new GetAllDriverQuery()).Cast<ITransactionObject>().ToList();
+                List<ITransactionObject> rentals = _queryHandler.Execute(new GetAllRentalsQuery()).Cast<ITransactionObject>().ToList();
+
+                PrintResult(car);
+                PrintResult(drivers);
+                PrintResult(rentals);
+
+
+
+
 
         }
     }

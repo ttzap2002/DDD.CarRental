@@ -8,7 +8,7 @@ using DDD.CarRental.Core.DomainModelLayer.Models;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
-    public class DistanceDTO : ValueObject
+    public class DistanceDTO : ValueObject, ITransactionObject
     {
         public float Value { get; set; }
         public Unit unit { get; set; }

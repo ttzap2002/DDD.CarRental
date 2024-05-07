@@ -30,6 +30,11 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
             this.AddDomainEvent(new CreateDriverDomainEvent(this.Id, this.FirstName.ToString(), this.LastName.ToString()));
         }
 
+        public override string ToString()
+        {
+            return $"Driver with license number {LicenceNumber} has {FreeMinutes} free minutes";
+        }
+
     }
 
 }

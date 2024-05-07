@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 {
-    public class DriverDTO
+    public class DriverDTO : ITransactionObject
     {
         public long Id { get; set; }
         public string LicenceNumber { get; set; }
@@ -17,5 +17,10 @@ namespace DDD.CarRental.Core.ApplicationLayer.DTOs
         public string LastName { get; set; }
         public float FreeMinutes { get; set; }
 
+
+        public override string ToString()
+        {
+            return $"Driver with license number {LicenceNumber} has {FreeMinutes} free minutes";
+        }
     }
 }

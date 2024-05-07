@@ -20,10 +20,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Calculation
             { Unit.inch, 0.0254f },    
             { Unit.foot , 1609.344f },     
             { Unit.yard, 0.9144f }
-
-
         };
-
         public static (float,Unit) Converter(float val, Unit unit, Unit targetUnit) 
         {
             float valToMeter = table[unit] * val;
