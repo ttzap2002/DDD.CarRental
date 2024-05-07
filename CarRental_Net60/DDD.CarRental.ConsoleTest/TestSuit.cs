@@ -8,6 +8,8 @@ using DDD.SharedKernel.DomainModelLayer.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Unit = DDD.CarRental.Core.DomainModelLayer.Models.Unit;
 
@@ -16,9 +18,9 @@ namespace DDD.CarRental.ConsoleTest
     public class TestSuit
     {
         private IServiceProvider _serviceProvide;
-
         private CommandHandler _commandHandler;
         private QueryHandler _queryHandler;
+
 
         public TestSuit(IServiceCollection serviceCollection)
         {
@@ -29,68 +31,131 @@ namespace DDD.CarRental.ConsoleTest
 
         public void Run()
         {
-            long carid = 11;
-            long carid1 = 21;
-            long driverid = 22;
-            long driverid1 = 31;
-            long rentalid = 32;
-            long rentalid1 = 41;
-            long posiotionid = 42;
+            long carid = 1;
+            long driverid = 1;
+            long rentalid = 1;
+            long posiotionid = 1;
 
-            //tworzymy drivera
-            _commandHandler.Execute(new CreateDriverCommand
+            void CreateDriver(long id, string licence, string firstname, string lastname)
             {
-                DriverId = driverid,
-                LicenceNumber = "Abc1233",
-                FirstName = "first",
-                LastName = "second",
-            }); ;
+                _commandHandler.Execute(new CreateDriverCommand
+                {
+                    DriverId = id,
+                    LicenceNumber = licence,
+                    FirstName = firstname,
+                    LastName = lastname,
+                }); ;
+            }
 
-            // pobieramy info o pokoju zagadek
-            Console.WriteLine("Utworzono kierowcę");
-
-            Position pos = new Position(
-                10f, 12f, Core.DomainModelLayer.Models.Unit.mile);
-
-            _commandHandler.Execute(new CreateCarCommand()
+            void RentCar(long rentID, long drivId, long cId, DateTime started)
             {
-                ID = carid1,
-                TotalDistance = new Core.DomainModelLayer.Models.Distance(100, Core.DomainModelLayer.Models.Unit.kilometer),
-                CurrentPosition = pos,
-                RegistrationNumber = "FFGRKRTHTRRH",
-            });
+                _commandHandler.Execute(new RentCarCommand()
+                {
+                    RentalId = rentID,
+                    DriverId = drivId,
+                    CarId = cId,
+                    Started = started,
+                });
+            }
 
-            Console.WriteLine("Utworzono auto");
-
-            Position position = new(1,2, Unit.kilometer);
-
-            _commandHandler.Execute(new RentCarCommand()
+            void CreateCar(long id, Distance totalDistance, Position currentPosition, string registrationNumber)
             {
-                RentalId = rentalid,
-                DriverId = driverid,
-                CarId = carid1,
-                Started = DateTime.Now,
-                Position = position,
-            });
+                _commandHandler.Execute(new CreateCarCommand()
+                {
+                    ID = id,
+                    TotalDistance = totalDistance,
+                    CurrentPosition = currentPosition,
+                    RegistrationNumber = registrationNumber,
+                });
+            }
+
+            void ReturnCar(int rentalId, DateTime finished)
+            {
+                _commandHandler.Execute(new ReturnCarCommand()
+                {
+                    RentalId = rentalId,
+                    Finished = finished
+                });
+            }
+
+            CreateDriver(driverid++, "AFDS-1", "first", "second");
+            CreateDriver(driverid++, "AF1S-1", "Jan", "Lowak");
+            CreateDriver(driverid++, "AFSA-41", "Mateusz", "Strojek");
+            CreateDriver(driverid++, "BAIE-1", "ABC", "XYZ");
+            CreateDriver(driverid++, "CAADG-23", "Karol", "Wiśniewski");
+            CreateDriver(driverid++, "ADHD-1", "Radosław", "Mocarski");
+            CreateDriver(driverid, "ADA2-32", "Tomasz", "Zapart");
+
+            Console.WriteLine("Utworzono kierowców");
+
+            Position pos = new Position(10f, 12f, Core.DomainModelLayer.Models.Unit.mile);
+            Position pos1 = new Position(10.0002f, 12.001f, Core.DomainModelLayer.Models.Unit.kilometer);
+            Position pos2 = new Position(-1f, -41f, Core.DomainModelLayer.Models.Unit.mile);
+            Position pos3 = new Position(-31f, 12f, Core.DomainModelLayer.Models.Unit.meter);
+            Position pos4 = new Position(2f, -12f, Core.DomainModelLayer.Models.Unit.mile);
+
+            CreateCar(1, new Distance(100, Core.DomainModelLayer.Models.Unit.kilometer),pos, "Abc1233");
+            CreateCar(2, new Distance(20, Core.DomainModelLayer.Models.Unit.kilometer), pos1, "KSA1233");
+            CreateCar(3, new Distance(2020, Core.DomainModelLayer.Models.Unit.kilometer), pos2, "KT1233");
+            CreateCar(4, new Distance(0, Core.DomainModelLayer.Models.Unit.kilometer), pos3, "KDA1233");
+            CreateCar(5, new Distance(21, Core.DomainModelLayer.Models.Unit.kilometer), pos4, "K11233");
+
+            Console.WriteLine("Utworzono auta");
+
+            _commandHandler.Execute(new CreatePrice() { Id = 1, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.01m, "zł") });
+            _commandHandler.Execute(new CreatePrice() { Id = 2, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.05m, "zł") });
+            _commandHandler.Execute(new CreatePrice() { Id = 3, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.10m, "zł") });
+            _commandHandler.Execute(new CreatePrice() { Id = 4, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.20m, "zł") });
+
+            RentCar(rentID:1, drivId:1, cId:1, DateTime.Now);
+            ReturnCar(rentalId: 1, finished: DateTime.Now.AddDays(1));
+
+
+            RentCar(rentID:2, drivId:2, cId:2, DateTime.Now);
+            ReturnCar(rentalId:2, finished: DateTime.Now.AddDays(2));
+
+            RentCar(rentID:3, drivId:3, cId:3, DateTime.Now);
+            RentCar(rentID:4, drivId:2, cId:4, DateTime.Now);
+            RentCar(rentID:5, drivId:4, cId:5, DateTime.Now);
+
+            // Sprawdzenie czy polityki działają
+            RentCar(rentID: 6, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 6, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 7, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 7, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 8, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 8, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 9, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 9, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 10, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 10, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 11, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 11, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 12, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 12, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 13, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 13, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 14, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 14, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 15, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 15, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 16, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 16, finished: DateTime.Now.AddDays(1));
+            RentCar(rentID: 17, drivId: 1, cId: 1, DateTime.Now);
+            ReturnCar(rentalId: 17, finished: DateTime.Now.AddDays(1));
+
 
             Console.WriteLine("Utworzono wypożyczenie");
 
-            List<RentalDTO> rentalInParticularInterval = _queryHandler.Execute(new GetAllRentalInTimeInterval()
-            { Start = DateTime.Now });
+            //List<RentalDTO> rentalInParticularInterval = _queryHandler.Execute(new GetAllRentalInTimeInterval()
+            //{ Start = DateTime.Now });
 
-            foreach(var r in rentalInParticularInterval) 
-            {
-                Console.WriteLine(r.Started);
-            }
+            //foreach(var r in rentalInParticularInterval) 
+            //{
+            //    Console.WriteLine(r.Started);
+            //}
 
-
-            _commandHandler.Execute(new CreatePrice() { Id = 1, StartTime = new DateTime(2020, 10, 5), UnitPrice = new Price(0.01m, "zł") });
-
-            _commandHandler.Execute(new ReturnCarCommand()
-            {
-                RentalId = rentalid,
-                Finished = DateTime.Now.AddDays(1),
-            });
+            Console.WriteLine("Zwrócono wypożyczenie");
 
         }
     }

@@ -58,7 +58,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
 
             Rental rental = new Rental(command.RentalId, command.Started, command.CarId, command.DriverId);
 
-            rental.StartRental(c, command.Position);
+            rental.StartRental(c, c.CurrentPosition);
             rental.RegisterPolicy(policy);
 
             _unitOfWork.RentalRepository.Insert(rental);

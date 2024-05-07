@@ -32,7 +32,7 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
 
             Random r = new Random();
 
-            position.X = position.X + (float)(r.NextDouble()-r.NextDouble())*(float)10;
+            position.X = position.X + (float)(r.NextDouble() - r.NextDouble())*(float)10;
             position.Y = position.Y + (float)(r.NextDouble() - r.NextDouble()) * (float)10;
 
             return position;
