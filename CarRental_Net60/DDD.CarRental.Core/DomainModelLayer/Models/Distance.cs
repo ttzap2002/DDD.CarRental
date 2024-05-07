@@ -1,4 +1,5 @@
-﻿using DDD.SharedKernel.DomainModelLayer.Implementations;
+﻿using DDD.CarRental.Core.DomainModelLayer.Calculation;
+using DDD.SharedKernel.DomainModelLayer.Implementations;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using System;
 using System.Collections.Generic;
@@ -77,10 +78,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         {
             if (!AreCompatibleCurrencies(m, m2))
             {
-                m.Value = m.CalculateToMM() / 1000000;
-                m.DistanceUnit = Unit.kilometer;
-                m2.Value = m2.CalculateToMM();
-                m2.DistanceUnit = Unit.kilometer;
+                m2.Value = UnitConverter.Converter(m2.Value,m2.DistanceUnit,m.DistanceUnit).Item1;
             }
             return new Distance(m.Value + m2.Value, m.DistanceUnit);
         }
@@ -89,10 +87,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         {
             if (!AreCompatibleCurrencies(m, m2))
             {
-                m.Value = m.CalculateToMM()/1000000;
-                m.DistanceUnit = Unit.kilometer;
-                m2.Value = m2.CalculateToMM();
-                m2.DistanceUnit = Unit.kilometer;
+                m2.Value = UnitConverter.Converter(m2.Value, m2.DistanceUnit, m.DistanceUnit).Item1;
             }
             return new Distance(m.Value - m2.Value, m.DistanceUnit);
         }

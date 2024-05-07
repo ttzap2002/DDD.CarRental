@@ -20,7 +20,7 @@ namespace DDD.CarRental.Core.ApplicationLayer.DTOs
 
         public override string ToString()
         {
-            return $"Car {RegistrationNumber} in position {CurrentPosition}, current distance {CurrentDistance}, total distance {TotalDistance}";
+            return $"Car {RegistrationNumber} in position {CurrentPosition}, current distance  {CurrentDistance}, total distance  {TotalDistance}";
         }
     }
 

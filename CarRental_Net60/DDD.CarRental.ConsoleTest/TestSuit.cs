@@ -175,6 +175,10 @@ namespace DDD.CarRental.ConsoleTest
                 PrintResult(car);
                 PrintResult(drivers);
                 PrintResult(rentals);
+                CarDTO car1 = _queryHandler.Execute(new GetCarByRegistrationNumber() { RegistrationNumber = "KDA1233" });
+                Console.WriteLine(car1);
+                CarDTO car2 = _queryHandler.Execute(new GetCarByRegistrationNumber() { RegistrationNumber = "KDA4433" });
+                Console.WriteLine(car2);
 
         }
     }

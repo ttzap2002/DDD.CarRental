@@ -24,8 +24,8 @@ namespace DDD.CarRental.Core.DomainModelLayer.Services
             float parameter = 10000;
             float coefficient = UnitConverter.Converter(parameter, Unit.meter, car.CurrentPosition.Unit).Item1;
 
-            newposition.X = position.X + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
-            newposition.Y = position.Y + (float)(rand.NextDouble() - rand.NextDouble()) * (float)coefficient;
+            newposition.X = position.X + (float)(rand.NextDouble()) * (float)coefficient;
+            newposition.Y = position.Y + (float)(rand.NextDouble()) * (float)coefficient;
 
             return newposition;
         }
