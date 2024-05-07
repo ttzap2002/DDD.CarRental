@@ -24,11 +24,11 @@ namespace DDD.CarRental.Core.DomainModelLayer.Policies
 
             if(numOfMinutes < 7200)
             {
-                minutes = (float)numOfMinutes * (float)0.01;
+                minutes = (float)numOfMinutes * (float)0.25;
             }
             else
             {
-                minutes = (float)(Math.Log(numOfMinutes) * (float)4);
+                minutes = (float)numOfMinutes*(float)0.15;
             }
 
             return minutes;

@@ -19,7 +19,7 @@ namespace DDD.CarRental.Core.DomainModelLayer.Policies
 
         public float CalculateDiscount(long numOfMinutes)
         {
-            return numOfMinutes * (float)0.001;
+            return numOfMinutes * (float)0.01;
         }
     }
 }
