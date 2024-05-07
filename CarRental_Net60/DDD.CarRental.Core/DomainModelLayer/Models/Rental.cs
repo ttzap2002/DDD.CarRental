@@ -1,4 +1,5 @@
-﻿using DDD.CarRental.Core.DomainModelLayer.Events;
+﻿using DDD.CarRental.Core.ApplicationLayer.DTOs;
+using DDD.CarRental.Core.DomainModelLayer.Events;
 using DDD.CarRental.Core.DomainModelLayer.Interfaces;
 using DDD.SharedKernel.DomainModelLayer;
 using DDD.SharedKernel.DomainModelLayer.Implementations;
@@ -46,15 +47,20 @@ namespace DDD.CarRental.Core.DomainModelLayer.Models
         public void FinishRental(Car car,Driver driver, DateTime Finish, Money unitPrice, Position position)
         {
             car.CarStatus = Status.free;
-            car.TotalDistance.Value = (car.TotalDistance + position.CalculateDistance(car.CurrentPosition)).Value;
+
+            Distance DistanceMade = position.CalculateDistance(car.CurrentPosition);
+
+                       
+
+            car.TotalDistance.Value = (car.TotalDistance + DistanceMade).Value;
 
             car.CurrentPosition = position;
             this.Finished = Finish;
             
             long minutes = (long)(Finished - Started).Value.TotalMinutes - (long)driver.FreeMinutes;
-            
             MoneyForRental = new Money(unitPrice.Amount*minutes);
             driver.FreeMinutes = this._policy.CalculateDiscount(minutes);
+
             this.AddDomainEvent(new FinishRentalDomainEvent(this));
         }
 

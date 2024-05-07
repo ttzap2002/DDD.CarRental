@@ -97,7 +97,7 @@ namespace DDD.CarRental.ConsoleTest
             Position pos4 = new Position(2f, -12f, Core.DomainModelLayer.Models.Unit.mile);
 
             CreateCar(1, new Distance(100, Core.DomainModelLayer.Models.Unit.kilometer),pos, "Abc1233");
-            CreateCar(2, new Distance(20, Core.DomainModelLayer.Models.Unit.kilometer), pos1, "KSA1233");
+            CreateCar(2, new Distance(200000, Core.DomainModelLayer.Models.Unit.centimeter),pos1, "KSA1233");
             CreateCar(3, new Distance(2020, Core.DomainModelLayer.Models.Unit.kilometer), pos2, "KT1233");
             CreateCar(4, new Distance(0, Core.DomainModelLayer.Models.Unit.kilometer), pos3, "KDA1233");
             CreateCar(5, new Distance(21, Core.DomainModelLayer.Models.Unit.kilometer), pos4, "K11233");
@@ -159,10 +159,15 @@ namespace DDD.CarRental.ConsoleTest
             //    Console.WriteLine(r.Started);
             //}
 
+            Distance d = new(1, Unit.meter);
+            Distance d1 = new(3, Unit.centimeter);
+            Distance d2 = new(6, Unit.kilometer);
+
             
+            // Test dodawania dystansu
+            Console.WriteLine((d + d1 + d2).Value.ToString());
 
-
-                void PrintResult(List<ITransactionObject> lista) 
+            void PrintResult(List<ITransactionObject> lista) 
                 {
                     foreach (var item in lista)
                         Console.WriteLine(item.ToString());
