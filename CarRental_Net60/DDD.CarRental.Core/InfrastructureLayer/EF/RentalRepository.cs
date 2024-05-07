@@ -25,7 +25,7 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
             return _context.Rentals.Where(p=>p.DriverId == driverID).Count();   
         }
 
-        public Position GetFinishedPosition(long rentalID, Unit targetUnit)
+        public Position GetFinishedPosition(long rentalID)
         {
             Rental rental = GetRentalID(rentalID);
             Car car = _context.Cars.Where(c=>c.Id == rental.CarId).FirstOrDefault();
@@ -34,12 +34,12 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
 
             Random r = new Random();
 
-            position.X = position.X + (float)(r.NextDouble() - r.NextDouble())*(float)10;
-            position.Y = position.Y + (float)(r.NextDouble() - r.NextDouble()) * (float)10;
+            float parameter = 10000;
+            float coefficient = UnitConverter.Converter(parameter, Unit.meter, car.CurrentPosition.Unit).Item1;
 
-            position.X = UnitConverter.Converter(position.X, position.Unit, targetUnit).Item1;
-            position.Y = UnitConverter.Converter(position.X, position.Unit, targetUnit).Item1;
-            position.Unit = targetUnit;
+            position.X = position.X + (float)(r.NextDouble() - r.NextDouble())*(float)coefficient;
+            position.Y = position.Y + (float)(r.NextDouble() - r.NextDouble()) * (float)coefficient;
+
             return position;
 
         }
