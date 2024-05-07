@@ -16,5 +16,6 @@ namespace DDD.CarRental.Core.InfrastructureLayer.EF
         {
             return _context.Cars.FirstOrDefault(p => p.RegistrationNumber == registration);
         }
+
     }
 }

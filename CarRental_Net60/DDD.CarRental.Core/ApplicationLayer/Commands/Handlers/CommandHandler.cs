@@ -99,7 +99,9 @@ namespace DDD.CarRental.Core.ApplicationLayer.Commands.Handlers
             if (c.CarStatus != Status.rental)
                 throw new Exception($"This car is not rented");
             Money m = _unitOfWork.PriceRepository.getPrice(r.Started);
-            r.FinishRental(c,d,command.Finished, m);
+            Position p = _unitOfWork.RentalRepository.GetFinishedPosition(command.RentalId);
+
+            r.FinishRental(c,d,command.Finished, m, p);
             _unitOfWork.Commit();
         }
 
