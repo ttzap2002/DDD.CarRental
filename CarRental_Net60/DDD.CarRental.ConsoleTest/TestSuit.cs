@@ -192,6 +192,13 @@ namespace DDD.CarRental.ConsoleTest
                 Console.WriteLine(driver);
                 RentalDTO rental = _queryHandler.Execute(new GetParticularRental() { rentalId = 2 });
                 Console.WriteLine(rental);
+                List<ITransactionObject> AllRentalsInTime = _queryHandler.Execute(new GetAllRentalInTimeInterval()
+
+                { Start = new DateTime(2020,10,10) , End = DateTime.Now  }).Cast<ITransactionObject>().ToList();
+                Console.WriteLine("====rentals time bounded====");
+                PrintResult(AllRentalsInTime);
+
+
 
         }
     }
