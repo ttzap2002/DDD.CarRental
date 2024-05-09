@@ -185,6 +185,14 @@ namespace DDD.CarRental.ConsoleTest
                 CarDTO car2 = _queryHandler.Execute(new GetCarByRegistrationNumber() { RegistrationNumber = "KDA4433" });
                 Console.WriteLine(car2);
 
+                List<ITransactionObject> allFreeCars = _queryHandler.Execute(new GetAllFreeCarsQuery()).Cast<ITransactionObject>().ToList();
+                Console.WriteLine("====FREE CARS====");
+                PrintResult(allFreeCars);
+                DriverDTO driver = _queryHandler.Execute(new GetParticularDriver() { ID = 3});
+                Console.WriteLine(driver);
+                RentalDTO rental = _queryHandler.Execute(new GetParticularRental() { rentalId = 2 });
+                Console.WriteLine(rental);
+
         }
     }
 }
